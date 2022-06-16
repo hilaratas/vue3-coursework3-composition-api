@@ -15,5 +15,6 @@ export function filterTasks(tasks, filter) {
         break;
     }
   })
+  console.log(newTasks)
   return newTasks
 }

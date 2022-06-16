@@ -9,6 +9,8 @@
     <h3 class="text-white">Всего задач: {{ tasksCounter }}</h3>
     <h3 class="text-white">Задач, соответсвующих фильтру: {{ filteredTasksCounter }}</h3>
 
+    <pre>{{filteredTasks}}</pre>
+
     <div class="card" v-if="filteredTasks.length">
       <div v-for="(task, idx) in filteredTasks" :key="task.id">
         <task-item
@@ -54,12 +56,17 @@ export default {
     let filteredTasks = reactive([])
     const filteredTasksCounter = computed(() => filteredTasks.length )
     let params = reactive({...FILTER_DEFAULT})
+    store.dispatch('filter/filterFetch').then(res => Object.keys(res).forEach(key => params[key] = res[key]))
 
-    watch(params, () => {
-      console.log('z nen')
-      filteredTasks = filterTasks(tasks, params)
+    watch(params, (newVal, oldVal) => {
+      console.log('Параметры изменились')
+      console.log(newVal, oldVal)
+      filteredTasks = filterTasks(tasks.value, params)
+      console.log(filteredTasks, filteredTasks.length)
     })
-    watch(tasks, () => {filteredTasks = filterTasks(tasks, params)})
+    watch(tasks, () => {
+      filteredTasks = filterTasks(tasks.value, params)
+    })
 
 
     function onClickDelete(removableTaskId) {
@@ -74,7 +81,7 @@ export default {
     }
 
     function onUpdateFilter() {
-      store.dispatch('filter/filterFetch').then(res => params = res)
+      store.dispatch('filter/filterFetch').then(res => Object.keys(res).forEach(key => params[key] = res[key]))
     }
 
     return {

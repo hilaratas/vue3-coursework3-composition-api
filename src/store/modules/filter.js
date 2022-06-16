@@ -5,7 +5,6 @@ export default {
   namespaced: true,
   mutations: {
     filterChange(state, newParams) {
-      console.log('Я тут 2')
       setLocalStorage('filter', JSON.stringify(newParams))
     }
   },

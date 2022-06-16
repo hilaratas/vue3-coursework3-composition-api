@@ -36,7 +36,7 @@ export default {
     const store = useStore()
     const allStatuses = Object.keys(TASK_STATUS)
     let params = reactive({...FILTER_DEFAULT})
-    store.dispatch('filter/filterFetch').then(res => params = res)
+    store.dispatch('filter/filterFetch').then(res => Object.keys(res).forEach(key => params[key] = res[key]))
 
     function onSubmit() {
       store.dispatch('filter/filterChange', {...params})

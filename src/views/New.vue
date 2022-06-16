@@ -43,7 +43,7 @@ export default {
         status: 'active'
       }
 
-      store.dispatch('createTask', newTask)
+      store.dispatch('taskAdd', newTask)
       router.push('/')
     }
 

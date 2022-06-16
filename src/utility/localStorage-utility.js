@@ -3,7 +3,5 @@ export function parseLocalStorage(key) {
 }
 
 export function setLocalStorage(key, value) {
-  console.log('Z тут 3')
-  console.log(key, value)
   localStorage.setItem(key, value)
 }
